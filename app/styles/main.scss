@@ -1,9 +1,9 @@
 // app/styles/main.scss
-@import url('https://fonts.googleapis.com');
+@import "https://fonts.googleapis.com";
 
 body {
   margin: 30px;
-  font-family: "Google Sans";
+  font-family: "Google Sans", sans-serif;
 }
 
 .selector-container {
@@ -11,7 +11,6 @@ body {
   padding: 10px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  // grid-template-columns: 1fr 2fr;
   width: 100%;
 }
 
@@ -23,7 +22,7 @@ body {
   .component-box {
     padding: 10px;
     margin: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
   }
 }
 
