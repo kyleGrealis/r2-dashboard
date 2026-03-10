@@ -12,7 +12,7 @@ ui <- function(id) {
     div(
       selectInput(
         ns("project"), "Project",
-        choices = c("NASCAR" = "nascar", "NHANES" = "nhanes")
+        choices = c("NHANES" = "nhanes", "NASCAR" = "nascar")
       )
     )
   )
