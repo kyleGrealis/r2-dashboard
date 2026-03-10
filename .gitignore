@@ -1,0 +1,49 @@
+# R package development
+.Rproj.user
+*.Rproj
+.Rhistory
+.Rdata
+.httr-oauth
+.DS_Store
+
+# Build artifacts
+inst/doc
+/doc/
+/Meta/
+*.so
+nascaR.data.Rcheck
+..Rcheck
+
+# CRAN submission
+cran-comments*
+CRAN-SUBMISSION*
+
+# pkgdown site
+docs
+
+# Quarto
+/.quarto/
+**/*.quarto_ipynb
+
+# Claude Code
+.claude/
+CLAUDE.md
+_learning-log.md
+
+# Data backups (excluded from package build)
+data/
+
+# Debug artifacts
+inst/extdata/debug/
+
+# Environment / secrets
+.env
+.Renviron
+
+# Local parquet cache (never commit data files)
+*.parquet
+
+# Database project
+node_modules/
+.wrangler/
+.dev.vars
