@@ -1,0 +1,35 @@
+name: Deploy to Pi5
+
+on:
+  push:
+    branches: [main]   # only triggers on pushes to main
+
+jobs:
+  deploy:
+    runs-on: pi5-shiny-server   # tells GitHub to use YOUR Pi5, not a GitHub cloud runner
+
+    steps:
+      - name: Pull latest code
+        working-directory: /srv/shiny-server/r2-dashboard
+        run: git fetch origin main && git reset --hard origin/main
+
+      - name: Build production assets
+        working-directory: /srv/shiny-server/r2-dashboard
+        run: Rscript -e "rhino::build_sass(); rhino::build_js()"
+
+      - name: Restore R dependencies
+        working-directory: /srv/shiny-server/r2-dashboard
+        run: Rscript -e "renv::restore(prompt = FALSE)"
+        # prompt = FALSE: don't ask for confirmation, just restore
+
+      - name: Restart Shiny service
+        run: sudo systemctl restart shiny-server
+
+      - name: Purge Cloudflare cache
+        run: |
+          curl -s -X POST \
+            "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{"files":["https://shiny.kylegrealis.com/r2-dashboard/static/css/app.min.css","https://shiny.kylegrealis.com/r2-dashboard/static/js/app.min.js"]}'
+
