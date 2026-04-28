@@ -13,14 +13,14 @@ jobs:
         working-directory: /srv/shiny-server/r2-dashboard
         run: git fetch origin main && git reset --hard origin/main
 
-      - name: Build production assets
-        working-directory: /srv/shiny-server/r2-dashboard
-        run: Rscript -e "rhino::build_sass(); rhino::build_js()"
-
       - name: Restore R dependencies
         working-directory: /srv/shiny-server/r2-dashboard
         run: Rscript -e "renv::restore(prompt = FALSE)"
         # prompt = FALSE: don't ask for confirmation, just restore
+
+      - name: Build production assets
+        working-directory: /srv/shiny-server/r2-dashboard
+        run: Rscript -e "rhino::build_sass(); rhino::build_js()"
 
       - name: Restart Shiny service
         run: sudo systemctl restart shiny-server
